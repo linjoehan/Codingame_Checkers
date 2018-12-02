@@ -2,8 +2,9 @@ package com.codingame.game;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.AbstractReferee;
 import com.codingame.gameengine.core.MultiplayerGameManager;
-import com.codingame.gameengine.module.entities.Circle;
+//import com.codingame.gameengine.module.entities.Circle;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
+import com.codingame.gameengine.module.entities.Sprite;
 import com.google.inject.Inject;
 import java.util.ArrayList;
 
@@ -16,13 +17,14 @@ public class Referee extends AbstractReferee {
     private char[][] board = new char[8][8];
     private int gameturn;
     
-    private int PIECE_RADIUS = 35;
-    private int BOARD_X = 582;
-    private int BOARD_Y = 189;
+    //private int PIECE_RADIUS = 35;
+    private int BOARD_X = 582 - 45;
+    private int BOARD_Y = 189 - 45;
     private int BOARD_DX = 102;
     private int BOARD_DY = 102;
     
-    private Circle[] boardpiece = new Circle[24];
+    private Sprite[] boardpiece = new Sprite[24];
+    private Sprite[] boardmask = new Sprite[24];
     
     private ArrayList<String> getMoves()
     {
@@ -40,8 +42,8 @@ public class Referee extends AbstractReferee {
                 if(
                 (board[row][col] == 'b' && p1turn) ||
                 (board[row][col] == 'B' && p1turn) ||
-                (board[row][col] == 'w' && !p1turn) ||
-                (board[row][col] == 'W' && !p1turn)
+                (board[row][col] == 'r' && !p1turn) ||
+                (board[row][col] == 'R' && !p1turn)
                 )
                 {
                     String square = "";
@@ -110,12 +112,12 @@ public class Referee extends AbstractReferee {
         			if(
         	        (board[row][col] == 'b' && p1turn) ||
         	        (board[row][col] == 'B' && p1turn) ||
-        	        (board[row][col] == 'w' && !p1turn) ||
-        	        (board[row][col] == 'W' && !p1turn)
+        	        (board[row][col] == 'r' && !p1turn) ||
+        	        (board[row][col] == 'R' && !p1turn)
         	        )
         			{
         				//up right move
-        				if(row > 0 && col < 7 && board[row][col] != 'w')
+        				if(row > 0 && col < 7 && board[row][col] != 'r')
         				{
         					if(board[row-1][col+1] == '.')
         					{
@@ -129,7 +131,7 @@ public class Referee extends AbstractReferee {
         				}
         				
         				//up left move
-        				if(row > 0 && col > 0 && board[row][col] != 'w')
+        				if(row > 0 && col > 0 && board[row][col] != 'r')
         				{
         					if(board[row-1][col-1] == '.')
         					{
@@ -211,10 +213,10 @@ public class Referee extends AbstractReferee {
     	
     	//NOTE: CLEAN THIS UP
     	//add in next capture if possible
-    	if(dir == 0 && current_row > 1 && current_col < 6 && piece != 'w') //up right capture
+    	if(dir == 0 && current_row > 1 && current_col < 6 && piece != 'r') //up right capture
     	{
     		//white captures black
-    		if( (piece == 'w' || piece == 'W') &&
+    		if( (piece == 'r' || piece == 'R') &&
     		    (board[current_row - 1][current_col+1] == 'b' || board[current_row - 1][current_col+1] == 'B') &&
     		    (board[current_row-2][current_col+2] == '.') &&
     		    (cap[current_row-1][current_col+1] == false)
@@ -226,7 +228,7 @@ public class Referee extends AbstractReferee {
     		
     		//black captures white
     		if( (piece == 'b' || piece == 'B') &&
-        	    (board[current_row - 1][current_col+1] == 'w' || board[current_row - 1][current_col+1] == 'W') &&
+        	    (board[current_row - 1][current_col+1] == 'r' || board[current_row - 1][current_col+1] == 'R') &&
         	    (board[current_row-2][current_col+2] == '.') &&
         	    (cap[current_row-1][current_col+1] == false)
         	)
@@ -236,10 +238,10 @@ public class Referee extends AbstractReferee {
         	}
     	}
     	
-    	if(dir == 1 && current_row > 1 && current_col > 1 && piece != 'w') //up left capture
+    	if(dir == 1 && current_row > 1 && current_col > 1 && piece != 'r') //up left capture
     	{
     		//white captures black
-    		if( (piece == 'w' || piece == 'W') &&
+    		if( (piece == 'r' || piece == 'R') &&
     		    (board[current_row - 1][current_col-1] == 'b' || board[current_row - 1][current_col-1] == 'B') &&
     		    (board[current_row-2][current_col-2] == '.') &&
     		    (cap[current_row-1][current_col-1] == false)
@@ -251,7 +253,7 @@ public class Referee extends AbstractReferee {
     		
     		//black captures white
     		if( (piece == 'b' || piece == 'B') &&
-        	    (board[current_row - 1][current_col-1] == 'w' || board[current_row - 1][current_col-1] == 'W') &&
+        	    (board[current_row - 1][current_col-1] == 'r' || board[current_row - 1][current_col-1] == 'R') &&
         	    (board[current_row-2][current_col-2] == '.') &&
         	    (cap[current_row-1][current_col-1] == false)
         	)
@@ -264,7 +266,7 @@ public class Referee extends AbstractReferee {
     	if(dir == 2 && current_row < 6 && current_col > 1 && piece != 'b') //down left capture
     	{
     		//white captures black
-    		if( (piece == 'w' || piece == 'W') &&
+    		if( (piece == 'r' || piece == 'R') &&
     		    (board[current_row + 1][current_col-1] == 'b' || board[current_row + 1][current_col-1] == 'B') &&
     		    (board[current_row+2][current_col-2] == '.') &&
     		    (cap[current_row+1][current_col-1] == false)
@@ -276,7 +278,7 @@ public class Referee extends AbstractReferee {
     		
     		//black captures white
     		if( (piece == 'b' || piece == 'B') &&
-        	    (board[current_row + 1][current_col-1] == 'w' || board[current_row + 1][current_col-1] == 'W') &&
+        	    (board[current_row + 1][current_col-1] == 'r' || board[current_row + 1][current_col-1] == 'R') &&
         	    (board[current_row+2][current_col-2] == '.') &&
         	    (cap[current_row+1][current_col-1] == false)
         	)
@@ -289,7 +291,7 @@ public class Referee extends AbstractReferee {
     	if(dir == 3 && current_row < 6 && current_col < 6 && piece != 'b') //down right capture
     	{
     		//white captures black
-    		if( (piece == 'w' || piece == 'W') &&
+    		if( (piece == 'r' || piece == 'R') &&
     		    (board[current_row + 1][current_col+1] == 'b' || board[current_row + 1][current_col+1] == 'B') &&
     		    (board[current_row+2][current_col+2] == '.') &&
     		    (cap[current_row+1][current_col+1] == false)
@@ -301,7 +303,7 @@ public class Referee extends AbstractReferee {
     		
     		//black captures white
     		if( (piece == 'b' || piece == 'B') &&
-        	    (board[current_row + 1][current_col+1] == 'w' || board[current_row + 1][current_col+1] == 'W') &&
+        	    (board[current_row + 1][current_col+1] == 'r' || board[current_row + 1][current_col+1] == 'R') &&
         	    (board[current_row+2][current_col+2] == '.') &&
         	    (cap[current_row+1][current_col+1] == false)
         	)
@@ -373,6 +375,9 @@ public class Referee extends AbstractReferee {
     		int next_c = move.charAt(string_pos) - 'a';
     		
     		//move boardpiece
+    		boardmask[piece_index]
+    				.setX(BOARD_X + next_c*BOARD_DX)
+    				.setY(BOARD_Y + next_r*BOARD_DY);
     		boardpiece[piece_index]
     				.setX(BOARD_X + next_c*BOARD_DX)
     				.setY(BOARD_Y + next_r*BOARD_DY);
@@ -393,9 +398,15 @@ public class Referee extends AbstractReferee {
     			}
     			
     			//remove piece
+    			int offx = 1500 + (int)(Math.random()*350);
+    			int offy = 150 + (int)(Math.random()*700);
+    			
     			boardpiece[remove_piece_index]
-    					.setX(2000)
-        				.setY(556);
+    					.setX(offx)
+        				.setY(offy);
+    			boardmask[remove_piece_index]
+    					.setX(offx)
+        				.setY(offy);
     		}
     		
             //update new r
@@ -407,15 +418,13 @@ public class Referee extends AbstractReferee {
             {
                 piece = 'B';
                 boardpiece[piece_index]
-                		.setLineWidth(5)
-                		.setLineColor(0xffff00);
+                		.setImage("black_king.png");
             }
-            if(piece == 'w' && next_r == 7)
+            if(piece == 'r' && next_r == 7)
             {
-                piece = 'W';
+                piece = 'R';
                 boardpiece[piece_index]
-                		.setLineWidth(5)
-                		.setLineColor(0xffff00);
+                		.setImage("red_king.png");
             }
             
             string_pos = string_pos + 2;
@@ -441,10 +450,14 @@ public class Referee extends AbstractReferee {
             {
                 if( (row+col) % 2 == 1 && row <= 2)
                 {
-                    board[row][col] = 'w';
-                    boardpiece[next_piece_index] = graphicEntityModule.createCircle()
-                    		.setRadius(PIECE_RADIUS)
-                    		.setFillColor(0xff3333)
+                    board[row][col] = 'r';
+                    boardmask[next_piece_index] = graphicEntityModule.createSprite()
+                    		.setImage("mask.png")
+                    		.setX(BOARD_X + col*BOARD_DX)
+                    		.setY(BOARD_Y + row*BOARD_DY);
+                    boardpiece[next_piece_index] = graphicEntityModule.createSprite()
+                    		.setImage("red_piece.png")
+                    		.setMask(boardmask[next_piece_index])
                     		.setX(BOARD_X + col*BOARD_DX)
                     		.setY(BOARD_Y + row*BOARD_DY);
                     next_piece_index++;
@@ -453,9 +466,13 @@ public class Referee extends AbstractReferee {
                 else if((row+col) % 2 == 1 && row >= 5)
                 {
                     board[row][col] = 'b';
-                    boardpiece[next_piece_index] = graphicEntityModule.createCircle()
-                    		.setRadius(PIECE_RADIUS)
-                    		.setFillColor(0x222222)
+                    boardmask[next_piece_index] = graphicEntityModule.createSprite()
+                    		.setImage("mask.png")
+                    		.setX(BOARD_X + col*BOARD_DX)
+                    		.setY(BOARD_Y + row*BOARD_DY);
+                    boardpiece[next_piece_index] = graphicEntityModule.createSprite()
+                    		.setImage("black_piece.png")
+                    		.setMask(boardmask[next_piece_index])
                     		.setX(BOARD_X + col*BOARD_DX)
                     		.setY(BOARD_Y + row*BOARD_DY);
                     next_piece_index++;
