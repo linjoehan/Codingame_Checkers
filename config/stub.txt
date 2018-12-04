@@ -1,0 +1,6 @@
+gameloop
+loop 8 read inputLine:string(8)
+read myColor:string(1)
+read legalMoves:int
+loop legalMoves read moveString:word(10)
+write MOVE
