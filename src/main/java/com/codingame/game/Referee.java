@@ -28,6 +28,7 @@ public class Referee extends AbstractReferee {
     
     private Sprite[] boardpiece = new Sprite[24];
     private Sprite[] boardmask = new Sprite[24];
+    private Sprite[] player_avatar = new Sprite[2];
     
     private String move_buffer;
     private int move_buffer_index;
@@ -224,7 +225,7 @@ public class Referee extends AbstractReferee {
     		//white captures black
     		if( (piece == 'r' || piece == 'R') &&
     		    (board[current_row - 1][current_col+1] == 'b' || board[current_row - 1][current_col+1] == 'B') &&
-    		    (board[current_row-2][current_col+2] == '.') &&
+    		    (board[current_row-2][current_col+2] == '.' || (current_row-2 == first_row && current_col+2 == first_col)) &&
     		    (cap[current_row-1][current_col+1] == false)
     		)
     		{
@@ -235,7 +236,7 @@ public class Referee extends AbstractReferee {
     		//black captures white
     		if( (piece == 'b' || piece == 'B') &&
         	    (board[current_row - 1][current_col+1] == 'r' || board[current_row - 1][current_col+1] == 'R') &&
-        	    (board[current_row-2][current_col+2] == '.') &&
+        	    (board[current_row-2][current_col+2] == '.' || (current_row-2 == first_row && current_col+2 == first_col)) &&
         	    (cap[current_row-1][current_col+1] == false)
         	)
         	{
@@ -249,7 +250,7 @@ public class Referee extends AbstractReferee {
     		//white captures black
     		if( (piece == 'r' || piece == 'R') &&
     		    (board[current_row - 1][current_col-1] == 'b' || board[current_row - 1][current_col-1] == 'B') &&
-    		    (board[current_row-2][current_col-2] == '.') &&
+    		    (board[current_row-2][current_col-2] == '.' || (current_row-2 == first_row && current_col-2 == first_col)) &&
     		    (cap[current_row-1][current_col-1] == false)
     		)
     		{
@@ -260,7 +261,7 @@ public class Referee extends AbstractReferee {
     		//black captures white
     		if( (piece == 'b' || piece == 'B') &&
         	    (board[current_row - 1][current_col-1] == 'r' || board[current_row - 1][current_col-1] == 'R') &&
-        	    (board[current_row-2][current_col-2] == '.') &&
+        	    (board[current_row-2][current_col-2] == '.' || (current_row-2 == first_row && current_col-2 == first_col)) &&
         	    (cap[current_row-1][current_col-1] == false)
         	)
         	{
@@ -274,7 +275,7 @@ public class Referee extends AbstractReferee {
     		//white captures black
     		if( (piece == 'r' || piece == 'R') &&
     		    (board[current_row + 1][current_col-1] == 'b' || board[current_row + 1][current_col-1] == 'B') &&
-    		    (board[current_row+2][current_col-2] == '.') &&
+    		    (board[current_row+2][current_col-2] == '.' || (current_row+2 == first_row && current_col-2 == first_col)) &&
     		    (cap[current_row+1][current_col-1] == false)
     		)
     		{
@@ -285,7 +286,7 @@ public class Referee extends AbstractReferee {
     		//black captures white
     		if( (piece == 'b' || piece == 'B') &&
         	    (board[current_row + 1][current_col-1] == 'r' || board[current_row + 1][current_col-1] == 'R') &&
-        	    (board[current_row+2][current_col-2] == '.') &&
+        	    (board[current_row+2][current_col-2] == '.' || (current_row+2 == first_row && current_col-2 == first_col)) &&
         	    (cap[current_row+1][current_col-1] == false)
         	)
         	{
@@ -299,7 +300,7 @@ public class Referee extends AbstractReferee {
     		//white captures black
     		if( (piece == 'r' || piece == 'R') &&
     		    (board[current_row + 1][current_col+1] == 'b' || board[current_row + 1][current_col+1] == 'B') &&
-    		    (board[current_row+2][current_col+2] == '.') &&
+    		    (board[current_row+2][current_col+2] == '.' || (current_row+2 == first_row && current_col+2 == first_col)) &&
     		    (cap[current_row+1][current_col+1] == false)
     		)
     		{
@@ -310,7 +311,7 @@ public class Referee extends AbstractReferee {
     		//black captures white
     		if( (piece == 'b' || piece == 'B') &&
         	    (board[current_row + 1][current_col+1] == 'r' || board[current_row + 1][current_col+1] == 'R') &&
-        	    (board[current_row+2][current_col+2] == '.') &&
+        	    (board[current_row+2][current_col+2] == '.' || (current_row+2 == first_row && current_col+2 == first_col)) &&
         	    (cap[current_row+1][current_col+1] == false)
         	)
         	{
@@ -443,6 +444,8 @@ public class Referee extends AbstractReferee {
     @Override
     public void init() 
     {
+    	gameManager.setMaxTurns(GAMETURN_LIMIT + 100);
+    			
     	move_buffer = "";
     	move_buffer_index = 0;
     	
