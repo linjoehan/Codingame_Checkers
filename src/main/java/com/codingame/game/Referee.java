@@ -452,9 +452,69 @@ public class Referee extends AbstractReferee {
     	//background
         graphicEntityModule.createSprite().setImage("background.jpg").setAnchor(0);
         
+        //player avatar 0
+        int player_num = 0;
+        int avatarx = 100;
+        int avatary = 720;
+        
+        graphicEntityModule.createSprite()
+        		.setImage(gameManager.getPlayer(player_num).getAvatarToken())
+        		.setX(avatarx+20)
+        		.setY(avatary)
+        		.setBaseWidth(200)
+        		.setBaseHeight(200)
+        		.setAnchor(0);
+        graphicEntityModule.createText(gameManager.getPlayer(player_num).getNicknameToken())
+                .setFontSize(50)
+                .setStrokeThickness(2)
+                .setX(avatarx+92)
+                .setY(avatary+220)
+                .setAnchor(0);
+        
+        graphicEntityModule.createSprite()
+				.setImage("black_piece.png")
+				.setMask(graphicEntityModule.createSprite()
+						.setImage("mask.png")
+						.setX(avatarx-20)
+						.setY(avatary+210)
+						)
+				.setX(avatarx-20)
+				.setY(avatary+210)
+				.setAnchor(0);
+        
+        //player avatar 1
+        player_num = 1;
+        avatarx = 100;
+        avatary = 50;
+        
+        graphicEntityModule.createSprite()
+			.setImage(gameManager.getPlayer(player_num).getAvatarToken())
+			.setX(avatarx+20)
+			.setY(avatary)
+			.setBaseWidth(200)
+			.setBaseHeight(200)
+			.setAnchor(0);
+        graphicEntityModule.createText(gameManager.getPlayer(player_num).getNicknameToken())
+        	.setFontSize(50)
+        	.setStrokeThickness(2)
+        	.setX(avatarx+92)
+        	.setY(avatary+220)
+        	.setAnchor(0);
+
+        graphicEntityModule.createSprite()
+			.setImage("red_piece.png")
+			.setMask(graphicEntityModule.createSprite()
+					.setImage("mask.png")
+					.setX(avatarx-20)
+					.setY(avatary+210)
+					)
+			.setX(avatarx-20)
+			.setY(avatary+210)
+			.setAnchor(0);
+        
+      //fill board with starting locations
         int next_piece_index = 0;
         
-        //fill board with starting locations
         for(int row = 0;row<8;row++)
         {
             for(int col = 0;col<8;col++)
