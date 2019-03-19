@@ -1,5 +1,11 @@
 <div id="statement_back" class="statement_back" style="display:none"></div>
 <div class="statement-body">
+    <div style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:20px;margin-right:15px;margin-left:15px;margin-bottom:10px;text-align:left">
+        <span class="statement-league-alert-content">
+            This is a port of the board game <a href="https://en.wikipedia.org/wiki/English_draughts">checkers</a>
+        </span>
+    </div>
+
   <!-- GOAL -->
   <div class="statement-section statement-goal">
     <h1>
@@ -7,7 +13,7 @@
       <span>The Goal</span>
     </h1>
     <div class="statement-goal-content">
-      You have to win a game of checkers against your opponent
+        The goal of the game is to capture all of your opponent’s pieces.
     </div>
   </div>
   <!-- RULES -->
@@ -15,67 +21,31 @@
     <h1>
       <span class="icon icon-rules">&nbsp;</span>
       <span>Rules</span>
-    </h1>
+    </h1> 
     <div>
-      <div class="statement-rules-content">Your program receives characters.<br>
-        Your actions have an effect.<br>
+      <div class="statement-rules-content">The game is a two player game played on a 8x8 board, each player has 16 pieces.<br>
+        Every turn you need to make a move to an empty square, if you can capture a piece than you must do that move.<br>
         <br>
-        The game zone works as follows:
+        Movement works as follow:
         <ul>
-          <li>There are coordinates.</li>
+          <li>You move a piece diagonally forward to an empty square. You can not move a piece diagonally backwards until it is promoted to king. If you can capture a piece you must make that move.</li>
         </ul>
         <br>
-        The units work as follows:
+        Jumping works as follows:
         <ul>
-          <li>They move around.</li>
+          <li>If an opponent piece is on a square diagonally forward next to one of your pieces and the space beyond is empty, then you must jump over the opponent piece capture it and land in the space beyond</li>
+          <li>If another jump is available after you have done a jump, then you must jump again and capture next piece. You must keep jumping until there are no more jumps available</li>
+          <li>A captured piece is removed from the board</li>
+          <li>If multiple pieces can jump, you can choose the piece you want to make the jump.</li>
         </ul>
-        You <strong>lose</strong> if:
+        Crowning:
         <ul>
-          <li>You mess up.</li>
-          <li>You do not supply a valid sequence of actions.</li>
+          <li>When one of your pieces reaches the opposite side of the board, it is crowned and is promoted to King.</li>
+          <li>A King can move diagonally backward and forward, it can only move one space at a time.</li>
+          <li>A King can also jump backward and forward, it must take the jump available</li>
         </ul>
+        Illustrated rules <a href="https://www.itsyourturn.com/t_helptopic2030.html">here</a>.
       </div>
-    </div>
-  </div>
-  <!-- EXPERT RULES -->
-  <div class="statement-section statement-expertrules">
-    <h1>
-      <span class="icon icon-expertrules">&nbsp;</span>
-      <span>Expert Rules</span>
-    </h1>
-    <div class="statement-expert-rules-content">
-      If you're going to run local simulations, you'll need to know this!
-    </div>
-  </div>
-  <!-- EXAMPLES -->
-  <div class="statement-section statement-examples">
-    <h1>
-      <span class="icon icon-example">&nbsp;</span>
-      <span>Example</span>
-    </h1>
-
-    <div class="statement-examples-text">
-      A basic situation, an instruction, a result.
-    </div>
-
-  </div>
-  <!-- WARNING -->
-  <div class="statement-section statement-warning">
-    <h1>
-      <span class="icon icon-warning">&nbsp;</span>
-      <span>Note</span>
-    </h1>
-    <div class="statement-warning-content">
-      <b>Don’t forget to run the tests by launching them from the “Test cases” window</b>. You can submit at any time
-      to recieve a score against the training validators. <b>You can submit as many times as you like</b>. Your most
-      recent submission will be used for the final ranking.<br>
-      <br>
-      <strong>Warning:</strong> the validation tests used to compute the final score are not the same as the ones used
-      during the event.
-      Harcoded solutions will not score highly.<br>
-      <br>
-      Don't hesitate to change the viewer's options to help debug your code (<img style="opacity:.8;background:#20252a;"
-        height="18" src="https://www.codingame.com/servlet/fileservlet?id=3463235186409" width="18">).
     </div>
   </div>
   <!-- PROTOCOL -->
@@ -84,17 +54,31 @@
       <span class="icon icon-protocol">&nbsp;</span>
       <span>Game Input</span>
     </h1>
-    <!-- Protocol block -->
-    <div class="blk">
-      <div class="text">The program must first read the initialization data from standard input. Then, provide to the
-        standard output one line with ...</div>
-    </div>
 
     <!-- Protocol block -->
     <div class="blk">
-      <div class="title">Input</div>
+      <div class="title">Input for one game turn</div>
       <div class="text">
-        <p><span class="statement-lineno">Line 1: </span>one string <var>...</var>, the ...</p>
+        <p><span class="statement-lineno">First 8 lines: </span>The board as strings of length 8. The characters can be: </p>
+        <ul><li>
+            <const>.</const>: empty square <br>
+        </li><li>
+            <const>r</const>: red piece<br>
+        </li><li>
+            <const>R</const>: red King<br>
+        </li><li>
+            <const>b</const>: black piece<br>
+        </li><li>
+            <const>B</const>: black King<br>
+        </li></ul>
+        <p><span class="statement-lineno">Next line: </span>Your color as a string. The characters can be: </p>
+        <ul><li>
+          <const>r</const>: red pieces<br>
+      </li><li>
+          <const>b</const>: black pieces<br>
+      </li></ul>
+        <p><span class="statement-lineno">Next line: </span>Number of legal moves as int: </p>
+        <p><span class="statement-lineno">Next lines: </span>The legal moves as strings</p>
       </div>
     </div>
 
@@ -102,28 +86,14 @@
     <div class="blk">
       <div class="title">Output</div>
       <div class="text">
-        <span class="statement-lineno">A single line</span> containing ...
+        <span class="statement-lineno">A single line</span>Containing the move. <br>Example(No jump move: a3b4, jump move: a3c5, multiple jump move: a3c5a7)
         <br>
       </div>
     </div>
 
     <!-- Protocol block -->
     <div class="blk">
-      <div class="title">Constraints</div>
-      <div class="text"><var>...</var> contains between 1 and 500 characters.<br>
-        <br>Allotted response time to output
-        is ≤ <const>2</const> seconds.</div>
-    </div>
-  </div>
-  <!-- STORY -->
-  <div class="statement-story-background">
-    <div class="statement-story-cover" style="background-size: cover; background-image: url(https://www.codingame.com/servlet/fileservlet?id=2210505809934)">
-      <div class="statement-story" style="min-height: 300px; position: relative">
-        <h1>Title</h1>
-        <div class="story-text">Story
-          <br>
-          Totally optional</div>
-      </div>
+        <br>Allotted response time per turn is ≤ <const>50</const> seconds.</div>
     </div>
   </div>
 </div>

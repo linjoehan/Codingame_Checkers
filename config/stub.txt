@@ -4,3 +4,9 @@ read myColor:string(1)
 read legalMoves:int
 loop legalMoves read moveString:word(10)
 write MOVE
+
+INPUT
+inputLine: board line
+myColor: r or b
+legalMoves: number of legal moves
+moveString: move
